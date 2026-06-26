@@ -15,10 +15,14 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install Dependencies
+    - name: Clean Bad Dependencies
       run: |
         npm pkg delete scripts.preinstall
-        npm install --legacy-peer-deps
+        npm uninstall npm-force-resolutions --save
+        rm -rf package-lock.json node_modules
+
+    - name: Install Dependencies
+      run: npm install --legacy-peer-deps
 
     - name: Build Web App
       run: npm run build
