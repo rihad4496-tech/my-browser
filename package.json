@@ -1,0 +1,116 @@
+{
+  "name": "rihadx-browser",
+  "version": "1.0.0",
+  "description": "RihadX Browser - Fast, Private, Secure",
+  "main": "dist/main/index.js",
+  "homepage": "./",
+  "author": {
+    "name": "Rihad",
+    "email": "rihad@rihadx.com"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev:renderer\" \"npm run dev:main\"",
+    "dev:renderer": "vite",
+    "dev:main": "tsc -p tsconfig.main.json --watch",
+    "build": "npm run build:renderer && npm run build:main",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.main.json",
+    "electron": "electron .",
+    "electron:dev": "wait-on http://localhost:5173 && electron .",
+    "start": "concurrently \"npm run dev:renderer\" \"npm run electron:dev\"",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.7",
+    "better-sqlite3": "^9.4.3",
+    "electron-store": "^8.1.0",
+    "node-fetch": "^3.3.2",
+    "uuid": "^9.0.0",
+    "adblock-rs": "^0.1.9",
+    "crypto-js": "^4.2.0",
+    "zod": "^3.22.4",
+    "framer-motion": "^11.0.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "zustand": "^4.5.2",
+    "@tanstack/react-query": "^5.28.4",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.363.0",
+    "react-resizable-panels": "^2.0.16",
+    "date-fns": "^3.6.0"
+  },
+  "devDependencies": {
+    "electron": "^29.1.4",
+    "electron-builder": "^24.13.3",
+    "@electron/rebuild": "^3.6.0",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0",
+    "vite": "^5.2.6",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.4.3",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.23",
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/node": "^20.11.30",
+    "@types/uuid": "^9.0.8",
+    "@types/crypto-js": "^4.2.2",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "jest": "^29.7.0"
+  },
+  "build": {
+    "appId": "com.rihadx.browser",
+    "productName": "RihadX Browser",
+    "copyright": "Copyright © 2024 Rihad",
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "release"
+    },
+    "win": {
+      "target": ["nsis", "portable"],
+      "icon": "assets/icons/icon.ico",
+      "certificateSubjectName": "RihadX Browser"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "icon": "assets/icons/icon.icns",
+      "category": "public.app-category.utilities",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "linux": {
+      "target": ["AppImage", "deb", "rpm"],
+      "icon": "assets/icons/icon.png",
+      "category": "Network"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "RihadX Browser"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "rihadx",
+        "repo": "rihadx-browser"
+      }
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand:        #6366f1;
+    --brand-light:  #818cf8;
+    --brand-dark:   #4f46e5;
+    --surface-bg:   #0f172a;
+    --surface-card: #1e293b;
+    --surface-hover:#172033;
+    --border:       rgba(99,102,241,0.15);
+    --text-primary: #f1f5f9;
+    --text-muted:   #94a3b8;
+    --text-faint:   #475569;
+    --radius:       10px;
+    --transition:   0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer components {
+  /* Glass card */
+  .glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(99, 102, 241, 0.12);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #6366f1 0%, #06b6d4 60%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Neon glow button */
+  .btn-primary {
+    @apply bg-brand-600 hover:bg-brand-500 text-white font-medium px-4 py-2 rounded-xl
+           transition-all duration-200 active:scale-95 shadow-glow-brand;
+  }
+  .btn-ghost {
+    @apply bg-transparent hover:bg-surface-800 text-surface-300 hover:text-white
+           font-medium px-3 py-2 rounded-lg transition-all duration-150 active:scale-95;
+  }
+  .btn-icon {
+    @apply flex items-center justify-center w-8 h-8 rounded-lg
+           text-surface-400 hover:text-white hover:bg-surface-700
+           transition-all duration-150 active:scale-90 cursor-pointer;
+  }
+
+  /* Input */
+  .input-base {
+    @apply bg-surface-800 border border-surface-700 rounded-xl px-4 py-2.5
+           text-surface-100 placeholder-surface-500 text-sm
+           focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:border-brand-500/60
+           transition-all duration-150 w-full;
+  }
+
+  /* Sidebar item */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer
+           text-surface-400 hover:text-white hover:bg-surface-800
+           transition-all duration-150 select-none;
+  }
+  .sidebar-item.active {
+    @apply text-brand-400 bg-brand-950 border border-brand-500/20;
+  }
+
+  /* Tab */
+  .tab-item {
+    @apply flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer
+           text-surface-400 hover:text-white hover:bg-surface-800
+           transition-all duration-150 select-none max-w-[200px] min-w-[120px];
+  }
+  .tab-item.active {
+    @apply bg-surface-800 text-white;
+  }
+
+  /* Status badge */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-green  { @apply bg-emerald-500/15 text-emerald-400; }
+  .badge-red    { @apply bg-rose-500/15 text-rose-400; }
+  .badge-blue   { @apply bg-brand-500/15 text-brand-400; }
+  .badge-amber  { @apply bg-amber-500/15 text-amber-400; }
+  .badge-gray   { @apply bg-surface-700 text-surface-400; }
+
+  /* Scrollable panel */
+  .scroll-panel {
+    @apply overflow-y-auto overflow-x-hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent;
+  }
+
+  /* Divider */
+  .divider {
+    @apply w-full h-px bg-surface-800 my-2;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    @apply absolute z-50 px-2 py-1 text-xs bg-surface-900 text-white rounded-lg
+           border border-surface-700 shadow-card whitespace-nowrap pointer-events-none;
+  }
+}
+
+@layer utilities {
+  .no-select { user-select: none; -webkit-user-select: none; }
+  .drag      { -webkit-app-region: drag; }
+  .no-drag   { -webkit-app-region: no-drag; }
+  .text-balance { text-wrap: balance; }
+}
+
+/* Custom animations */
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2); opacity: 0; }
+}
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* Security shield animation */
+@keyframes shield-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(16,185,129,0.4)); }
+  50%       { filter: drop-shadow(0 0 14px rgba(16,185,129,0.8)); }
+}
+.shield-active { animation: shield-glow 2s ease-in-out infinite; }
+
+/* Loading bar */
+.loading-bar {
+  height: 2px;
+  background: linear-gradient(90deg, #6366f1, #06b6d4, #8b5cf6);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
